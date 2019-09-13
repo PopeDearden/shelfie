@@ -1,26 +1,43 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Dashboard from './Components/Dashboard/Dashboard'
+import Header from './Components/Header/Header'
+import Form from './Components/Form/Form'
 
-function App() {
+class App extends Component {
+  constructor() {
+    super();
+    this.state={
+      list: [
+        {name: 'thing1',
+      price: 5,
+    image: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png'},
+    {name: 'thing2',
+      price: 5,
+    image: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png'},
+    {name: 'thing3',
+      price: 5,
+    image: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png'},
+    {name: 'thing4',
+      price: 5,
+    image: 'https://homepages.cae.wisc.edu/~ece533/images/airplane.png'}
+      ]
+    }
+  }
+
+  render() {
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Dashboard 
+      list={this.state.list}/>
+      <Form />
+      <Header />
+  
     </div>
-  );
+  )
+}
 }
 
 export default App;
