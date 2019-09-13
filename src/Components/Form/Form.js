@@ -28,6 +28,15 @@ constructor() {
             price: 0})
             console.log(this.state)
         }
+        postProduct(body) {
+            axios.post('api/product', body).then(()=> {
+                this.props.refreshInventory()
+                this.cancelReset()
+            })
+            .catch(error => {
+                alert('the damn thing didnt work')
+            })
+        }
 
 render() {
     return (
@@ -37,7 +46,7 @@ render() {
             <input onChange={e=>this.handlePriceChange(e)}/>
             <input onChange={e=>this.handleImageChange(e)}/>
             <button onClick={()=>this.cancelReset()}>Cancel</button>
-            <button>Add To Inventory</button>
+            <button onClick={()=>this.postProduct(this.state)}>Add To Inventory</button>
             
         </div>
     )
