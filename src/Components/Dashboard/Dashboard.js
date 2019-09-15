@@ -29,7 +29,7 @@ export default class Dashboard extends Component {
         return (
             <div className='Dashboard'>
                 {this.props.list.map((el, index) => (
-                    <div
+                    <div className='single1'
                     key ={index + 'div'}>
                     <Product
                         refreshInventory={this.props.refreshInventory}

@@ -36,10 +36,21 @@
   display: flex;
   flex-direction: column;
 }
-.single {
+.single1 {
   background-color: red;
   width: 20vw;
-  height: 40vh;
+  height: 25vh;
+  padding: 20px;
+  margin: 10px;
+}
+.single {
+  display: flex;
+  flex-direction: row;
+}
+.single2{
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
 }
 .single img{
   width: 10vw;
