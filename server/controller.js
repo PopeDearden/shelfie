@@ -24,7 +24,7 @@ module.exports = {
         const { id } = req.params
     
         dbInstance.delete(id)
-        .then(()=>res.send(200))
+        .then(()=>res.sendStatus(200))
         .catch(err => {
             res.status(500).send({errorMessage: "I can't get rid of the monkeys!"})
             console.log(err)

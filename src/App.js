@@ -9,9 +9,13 @@ class App extends Component {
   constructor() {
     super();
     this.state={
-      list: []
+      list: [],
+      selectedProduct: ['none'],
     }
+    this.selectedProduct = this.selectedProduct.bind(this)
     this.refreshInventory = this.refreshInventory.bind(this)
+    // this.refreshInventory2 = this.refreshInventory2.bind(this)
+    // this.refresh = this.refreshInventory.bind(this)
   }
 componentDidMount() {
   axios.get('/api/inventory').then(res=> {
@@ -21,16 +25,26 @@ componentDidMount() {
 refreshInventory() {
   axios.get('/api/inventory').then(res=> {
     this.setState({ list: res.data })
+    console.log('SUCCESS!')
   })
+}
+selectedProduct(el) {
+  this.setState({selectedProduct: el})
+  console.log('select hit')
+  console.log(this.state.selectedProduct)
 }
   render() {
   return (
 
     <div className="App">
-      <Dashboard 
-      list={this.state.list}/>
+      <Dashboard
+      list={this.state.list}
+      refreshInventory={this.refreshInventory}
+      selectProduct = {this.selectedProduct}
+      />
       <Form 
-      refreshInventory = {this.refreshInventory}/>
+      selectedProduct={this.state.selectedProduct}
+      refreshInventory={this.refreshInventory}/>
       <Header />
   
     </div>
