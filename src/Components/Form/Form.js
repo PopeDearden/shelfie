@@ -7,9 +7,10 @@ export default class Form extends Component {
         super()
         this.state = {
             name: null,
-            image: null,
+            image_url: 'https://icon-library.net/images/icon-product/icon-product-11.jpg',
             price: null,
             selectedProductID: null,
+            selectedProduct: null,
             buttonSave: true,
         }
     }
@@ -25,29 +26,13 @@ export default class Form extends Component {
             this.setState({
                 selectedProductID: this.props.selectedProduct.product_id,
                 name: this.props.selectedProduct.name,
-                image: this.props.selectedProduct.image,
+                image_url: this.props.selectedProduct.image_url,
                 price: this.props.selectedProduct.price,
                 buttonSave: false,
             })
         }
       }
-    // componentDidUpdate(prevProps) {
-    //     // console.log(this.props)
-    //     // console.log(prevProps)
-    //     if (this.props === prevProps){
-    //         alert('the same')
-    //     } else{
-    //         this.setState({
-    //             selectedProductID: this.props.selectedProduct.product_id,
-    //             name: this.props.selectedProduct.name,
-    //             image: this.props.selectedProduct.image,
-    //             price: this.props.selectedProduct.price,
-    //             buttonSave: false,
-    //         })
-    //         console.log(this.state)
-    //         console.log('update happened')
-    //     }
-    // }
+   
     handleNameChange(e) {
         this.setState({ name: e.target.value })
         // console.log(`${this.state.name}`)
@@ -57,16 +42,17 @@ export default class Form extends Component {
         // console.log(this.state.price)
     }
     handleImageChange(e) {
-        this.setState({ image: e.target.value })
+        this.setState({ image_url: e.target.value })
         // console.log(this.state.image)
     }
     cancelReset() {
         this.setState({
             name: 'Enter Name',
-            image: '',
+            image_url: 'https://icon-library.net/images/icon-product/icon-product-11.jpg',
             price: 0,
             buttonSave: true,
-            selectedProductID: null
+            selectedProductID: null,
+            selectedProduct: null
         })
         console.log('reset state')
     }
@@ -80,8 +66,11 @@ export default class Form extends Component {
                 alert('the damn thing didnt work')
             })
     }
-    putProduct(body) {
-        console.log(body)
+    putProduct(id, body) {
+        axios.put(`api/product/${id}`, body).then(()=> {
+            this.props.refreshInventory()
+            this.cancelReset()
+        })
     }
 
     render() {
@@ -97,7 +86,7 @@ export default class Form extends Component {
                     <button onClick={() => this.postProduct(this.state)}>Add To Inventory</button>
 
                 ) : (
-                    <button onClick={() => this.putProduct(this.state)}>Save them Changes</button>
+                    <button onClick={() => this.putProduct(this.state.selectedProductID, this.state)}>Save them Changes</button>
                     )}
 
 

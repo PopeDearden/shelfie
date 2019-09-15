@@ -1,0 +1,1 @@
+UPDATE simproduct SET (name, image_url, price) = ($1,$2,$3) WHERE product_id = $4;

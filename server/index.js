@@ -19,5 +19,6 @@ app.use(express.json())
 app.get('/api/inventory/', controller.getAll)
 app.post('/api/product/', controller.addProduct)
 app.delete('/api/product/:id', controller.deleteProduct)
+app.put('/api/product/:id', controller.editProduct)
 
 app.listen(SERVER_PORT, () => console.log(`${SERVER_PORT} wild chickens laying eggs`))
