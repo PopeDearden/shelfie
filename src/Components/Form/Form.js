@@ -22,7 +22,7 @@ export default class Form extends Component {
     }
     componentDidUpdate(prevProps) {
         // Typical usage (don't forget to compare props):
-        if (this.props !== prevProps) {
+        if (this.props.selectedProduct !== prevProps.selectedProduct) {
             this.setState({
                 selectedProductID: this.props.selectedProduct.product_id,
                 name: this.props.selectedProduct.name,
@@ -31,8 +31,8 @@ export default class Form extends Component {
                 buttonSave: false,
             })
         }
-      }
-   
+    }
+
     handleNameChange(e) {
         this.setState({ name: e.target.value })
         // console.log(`${this.state.name}`)
@@ -67,7 +67,7 @@ export default class Form extends Component {
             })
     }
     putProduct(id, body) {
-        axios.put(`api/product/${id}`, body).then(()=> {
+        axios.put(`api/product/${id}`, body).then(() => {
             this.props.refreshInventory()
             this.cancelReset()
         })
@@ -75,18 +75,18 @@ export default class Form extends Component {
 
     render() {
         return (
-            <div>
-                Form
-           Name <input value={this.state.name} onChange={e => this.handleNameChange(e)} />
+            <div className='FormProp'>
+                <img src={this.state.image_url} alt="meh"/>
+                Name <input value={this.state.name} onChange={e => this.handleNameChange(e)} />
                 Price <input value={this.state.price} onChange={e => this.handlePriceChange(e)} />
-                Image <input value={this.state.image} onChange={e => this.handleImageChange(e)} />
+                Image <input value={this.state.image_url} onChange={e => this.handleImageChange(e)} />
                 <button onClick={() => this.cancelReset()}>Cancel</button>
-                
+
                 {this.state.buttonSave ? (
                     <button onClick={() => this.postProduct(this.state)}>Add To Inventory</button>
 
                 ) : (
-                    <button onClick={() => this.putProduct(this.state.selectedProductID, this.state)}>Save them Changes</button>
+                        <button onClick={() => this.putProduct(this.state.selectedProductID, this.state)}>Save them Changes</button>
                     )}
 
 

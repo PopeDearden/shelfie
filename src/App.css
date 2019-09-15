@@ -1,0 +1,48 @@
+.App {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.TheHead {
+  display: flex;
+  flex-direction: column;
+  
+}
+.BoxHead {
+  height: 15vh;
+  background-color: red;
+  width: 100vw;
+}
+.FormProp {
+  background-color: #3ad886;
+  width: 20vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  padding: 30px;
+
+}
+.FormProp img {
+  width: 10vw;
+}
+.FormProp button {
+  margin: 10px;
+}
+
+.Dashboard {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+}
+.single {
+  background-color: red;
+  width: 20vw;
+  height: 40vh;
+}
+.single img{
+  width: 10vw;
+  display: flex;
+  flex-direction: column;
+}

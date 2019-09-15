@@ -6,7 +6,7 @@ export default class Product extends Component {
 render() {
     const image_url = this.props.product.image_url
     return (
-        <div>
+        <div className='single'>
             <img src={image_url} alt="stupid thing not working" />
             <h2>{this.props.product.name}</h2>
             <h4>${this.props.product.price}</h4>

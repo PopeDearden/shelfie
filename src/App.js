@@ -36,7 +36,12 @@ selectedProduct(el) {
   render() {
   return (
 
-    <div className="App">
+    <div className="TheHead">
+      <Header />
+
+      <div className= "App">
+
+
       <Dashboard
       list={this.state.list}
       refreshInventory={this.refreshInventory}
@@ -45,7 +50,7 @@ selectedProduct(el) {
       <Form 
       selectedProduct={this.state.selectedProduct}
       refreshInventory={this.refreshInventory}/>
-      <Header />
+      </div>
   
     </div>
   )
