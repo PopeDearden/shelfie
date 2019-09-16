@@ -17,6 +17,7 @@ console.log('it is working'))
 app.use(express.json())
 
 app.get('/api/inventory/', controller.getAll)
+app.get('/api/product/:id', controller.getOne)
 app.post('/api/product/', controller.addProduct)
 app.delete('/api/product/:id', controller.deleteProduct)
 app.put('/api/product/:id', controller.editProduct)

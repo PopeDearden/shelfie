@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import { HashRouter, Link, Route } from "react-router-dom";
 
 
 export default class Form extends Component {
@@ -10,26 +11,36 @@ export default class Form extends Component {
             image_url: 'https://icon-library.net/images/icon-product/icon-product-11.jpg',
             price: null,
             selectedProductID: null,
-            selectedProduct: null,
+            selectedProduct: [],
             buttonSave: true,
         }
+        this.cancelReset = this.cancelReset.bind(this)
     }
     componentDidMount() {
-        this.setState({
-            buttonSave: true,
-        })
-        console.log(this.state)
-    }
-    componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
-        if (this.props.selectedProduct !== prevProps.selectedProduct) {
-            this.setState({
-                selectedProductID: this.props.selectedProduct.product_id,
-                name: this.props.selectedProduct.name,
-                image_url: this.props.selectedProduct.image_url,
-                price: this.props.selectedProduct.price,
-                buttonSave: false,
+        if (isNaN(this.props.match.params.id)) { console.log('true') }
+        else {
+            axios.get(`/api/product/${this.props.match.params.id}`).then(res => {
+                console.log(res.data)
+                const product = res.data
+                this.setState({
+                    name: product[0].name,
+                    price: product[0].price,
+                    image_url: product[0].image_url,
+                    selectedProductID: this.props.match.params.id,
+                    buttonSave: false,
+
+                })
             })
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps == this.props) {
+            console.log('yay!')
+        }
+        else {
+           this.cancelReset()
+        console.log('new state')
         }
     }
 
@@ -58,7 +69,7 @@ export default class Form extends Component {
     }
     postProduct(body) {
         axios.post('api/product', body).then(() => {
-            this.props.refreshInventory()
+            // this.props.refreshInventory()
             // console.log(this.props)
             this.cancelReset()
         })
@@ -68,7 +79,7 @@ export default class Form extends Component {
     }
     putProduct(id, body) {
         axios.put(`api/product/${id}`, body).then(() => {
-            this.props.refreshInventory()
+            // this.props.refreshInventory()
             this.cancelReset()
         })
     }
@@ -76,18 +87,19 @@ export default class Form extends Component {
     render() {
         return (
             <div className='FormProp'>
-                <img src={this.state.image_url} alt="meh"/>
+                <img src={this.state.image_url} alt="meh" />
                 Name <input value={this.state.name} onChange={e => this.handleNameChange(e)} />
                 Price <input value={this.state.price} onChange={e => this.handlePriceChange(e)} />
                 Image <input value={this.state.image_url} onChange={e => this.handleImageChange(e)} />
                 <button onClick={() => this.cancelReset()}>Cancel</button>
+                <Link to="/">
+                    {this.state.buttonSave ? (
+                        <button onClick={() => this.postProduct(this.state)}>Add To Inventory</button>
 
-                {this.state.buttonSave ? (
-                    <button onClick={() => this.postProduct(this.state)}>Add To Inventory</button>
-
-                ) : (
-                        <button onClick={() => this.putProduct(this.state.selectedProductID, this.state)}>Save them Changes</button>
-                    )}
+                    ) : (
+                            <button onClick={() => this.putProduct(this.state.selectedProductID, this.state)}>Save them Changes</button>
+                        )}
+                </Link>
 
 
             </div>

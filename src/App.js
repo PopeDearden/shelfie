@@ -3,58 +3,28 @@ import './App.css';
 import Dashboard from './Components/Dashboard/Dashboard'
 import Header from './Components/Header/Header'
 import Form from './Components/Form/Form'
-import axios from 'axios'
+import { HashRouter, Link} from "react-router-dom";
+import routes from "./routes";
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state={
-      list: [],
-      selectedProduct: ['none'],
-    }
-    this.selectedProduct = this.selectedProduct.bind(this)
-    this.refreshInventory = this.refreshInventory.bind(this)
-    // this.refreshInventory2 = this.refreshInventory2.bind(this)
-    // this.refresh = this.refreshInventory.bind(this)
-  }
-componentDidMount() {
-  axios.get('/api/inventory').then(res=> {
-    this.setState({ list: res.data })
-  })
-}
-refreshInventory() {
-  axios.get('/api/inventory').then(res=> {
-    this.setState({ list: res.data })
-    console.log('SUCCESS!')
-  })
-}
-selectedProduct(el) {
-  this.setState({selectedProduct: el})
-  console.log('select hit')
-  console.log(this.state.selectedProduct)
-}
+export default class App extends Component {
   render() {
-  return (
-
-    <div className="TheHead">
-      <Header />
-
-      <div className= "App">
-
-
-      <Dashboard
-      list={this.state.list}
-      refreshInventory={this.refreshInventory}
-      selectProduct = {this.selectedProduct}
-      />
-      <Form 
-      selectedProduct={this.state.selectedProduct}
-      refreshInventory={this.refreshInventory}/>
-      </div>
-  
-    </div>
-  )
+    return (
+      <HashRouter>
+        <div>
+          <nav className="nav">
+            <div>UGGHHHH</div>
+            <div className="link-wrap">
+              <Link to="/" className="links">
+                Dashboard
+              </Link>
+              <Link to="/add" className="links">
+                Add Product
+              </Link>
+            </div>
+          </nav>
+          {routes}
+        </div>
+      </HashRouter>
+    );
+  }
 }
-}
-
-export default App;

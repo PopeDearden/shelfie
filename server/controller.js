@@ -8,6 +8,18 @@ module.exports = {
                 console.log(err)
             })
     },
+    getOne: (req, res, next) => {
+        const dbInstance= req.app.get('db')
+        const{ id } = req.params
+    
+        dbInstance.get_product(id)
+        .then ( thing => res.status(200).send( thing ) )
+        .catch(err => {
+            res.status(500).send({errorMessage: "Oops I forgot to put the seat down!"})
+        })
+    },
+
+
     addProduct: (req, res, next) => {
         const dbInstance = req.app.get('db')
         const { name, image_url, price } = req.body
